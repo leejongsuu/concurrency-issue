@@ -39,3 +39,4 @@ Database이 제공하는 **`lock`**을 이용해서 동시성을 제어
 
 # branch
 - main : 초반 세팅 및 재고 감소 로직 작성 -> race condition 없을 시 테스트 성공
+- problem : 다수의 스레드로 동시에 재고 감소를 했을 때 문제가 발생 -> Race Condition
