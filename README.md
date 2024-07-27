@@ -41,3 +41,4 @@ Database이 제공하는 **`lock`** 을 이용해서 동시성을 제어
 - **`main`** : 초반 세팅 및 재고 감소 로직 작성 -> race condition 없을 시 테스트 성공
 - **`problem`** : 다수의 스레드로 동시에 재고 감소를 했을 때 문제가 발생 -> Race Condition
 - **`synchronized`** : synchronized를 통해 Race Condition을 해결, synchronized의 특징과 문제점
+- **`pessimistic lock`** : Pessimistick Lock을 통해 동시성 문제를 해결
