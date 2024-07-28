@@ -1,9 +1,9 @@
 package com.example.concurrent.service;
 
 import com.example.concurrent.entity.Stock;
+import com.example.concurrent.facade.OptimisticLockStockFacade;
 import com.example.concurrent.repository.StockRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class StockServiceTest {
@@ -23,6 +23,9 @@ class StockServiceTest {
 
     @Autowired
     StockService stockService;
+
+    @Autowired
+    OptimisticLockStockFacade optimisticLockStockFacade;
 
     @BeforeEach
     public void before() {
@@ -52,7 +55,9 @@ class StockServiceTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    stockService.decreaseStock(1L, 1L);
+                    optimisticLockStockFacade.decreaseStock(1L, 1L);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 } finally {
                     latch.countDown();
                 }

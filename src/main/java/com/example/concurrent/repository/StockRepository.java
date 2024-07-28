@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Lock(LockModeType.OPTIMISTIC)
     @Query("SELECT s FROM Stock s WHERE s.id = :id")
-    Stock findByIdWithPessimisticLock(Long id);
+    Stock findByIdWithOptimisticLock(Long id);
+
 }
