@@ -1,7 +1,8 @@
 package com.example.concurrent.service;
 
 import com.example.concurrent.entity.Stock;
-import com.example.concurrent.facade.OptimisticLockStockFacade;
+import com.example.concurrent.facade.NamedLockStockFacade;
+import com.example.concurrent.repository.LockRepository;
 import com.example.concurrent.repository.StockRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,11 @@ class StockServiceTest {
     StockService stockService;
 
     @Autowired
-    OptimisticLockStockFacade optimisticLockStockFacade;
+    LockRepository lockRepository;
+
+    @Autowired
+    NamedLockStockFacade namedLockStockFacade;
+
 
     @BeforeEach
     public void before() {
@@ -55,9 +60,7 @@ class StockServiceTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    optimisticLockStockFacade.decreaseStock(1L, 1L);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    namedLockStockFacade.decreaseStock(1L, 1L);
                 } finally {
                     latch.countDown();
                 }
@@ -67,6 +70,7 @@ class StockServiceTest {
         latch.await();
 
         Stock stock = stockRepository.findById(1L).orElseThrow();
+
         // 100 - (1 * 100) = 0
         assertEquals(0, stock.getQuantity());
     }
