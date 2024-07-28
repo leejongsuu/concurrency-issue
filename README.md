@@ -43,3 +43,4 @@ Database이 제공하는 **`lock`** 을 이용해서 동시성을 제어
 - **`synchronized`** : synchronized를 통해 Race Condition을 해결, synchronized의 특징과 문제점
 - **`pessimistic lock`** : Pessimistick Lock을 통해 동시성 문제를 해결
 - **`optimistic lock`** : Optimistick Lock을 통해 동시성 문제를 해결
+- **`named Lock`** : Named Lock을 통해 동시성 문제를 해결
