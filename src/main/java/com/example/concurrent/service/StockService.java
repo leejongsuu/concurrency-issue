@@ -15,7 +15,7 @@ public class StockService {
         this.stockRepository = stockRepository;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void decreaseStock(Long id, Long quantity) {
         Stock stock = stockRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("재고가 존재하지 않습니다."));
