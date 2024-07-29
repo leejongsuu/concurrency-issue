@@ -1,12 +1,12 @@
 package com.example.concurrent.service;
 
 import com.example.concurrent.entity.Stock;
-import com.example.concurrent.facade.LettuceLockStockFacade;
-import com.example.concurrent.repository.RedisLockRepository;
+import com.example.concurrent.facade.RedissonLockStockFacade;
 import com.example.concurrent.repository.StockRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.redisson.RedissonLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -26,11 +26,7 @@ class StockServiceTest {
     StockService stockService;
 
     @Autowired
-    LettuceLockStockFacade lettuceLockStockFacade;
-
-    @Autowired
-    RedisLockRepository redisLockRepository;
-
+    RedissonLockStockFacade redissonLockStockFacade;
 
     @BeforeEach
     public void before() {
@@ -60,9 +56,7 @@ class StockServiceTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    lettuceLockStockFacade.decreaseStock(1L, 1L);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    redissonLockStockFacade.decreaseStock(1L, 1L);
                 } finally {
                     latch.countDown();
                 }
