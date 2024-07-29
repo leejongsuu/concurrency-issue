@@ -44,3 +44,5 @@ Database이 제공하는 **`lock`** 을 이용해서 동시성을 제어
 - **`pessimistic lock`** : Pessimistick Lock을 통해 동시성 문제를 해결
 - **`optimistic lock`** : Optimistick Lock을 통해 동시성 문제를 해결
 - **`named Lock`** : Named Lock을 통해 동시성 문제를 해결
+- **`Lettuce`** : Redis - Lettuce를 활용하여 동시성 문제를 해결
+- **`Redisson`** : Redis - Redisson을 활용하여 동시성 문제를 해결
